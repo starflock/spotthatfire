@@ -76,7 +76,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBAction func reportFireBtn(_ sender: UIButton) {
         
-        let json: [String: Any] = [
+        var json: [String: Any] = [
             "location" :
                 [
                     "latitude" : lat,
@@ -87,6 +87,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             "time": String(describing: time)
         ]
         
+        var idToken = UserDefaults.standard.string(forKey: "idToken")
+        if idToken != nil {
+            json["idToken"] = idToken.unsafelyUnwrapped
+        }
         
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
@@ -148,40 +152,56 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         
         //var firesData: [String] = []
-        var fireLat = Double()
-        var fireLon = Double()
-        var fireLoc = [MKPointAnnotation]()
         
-        let firesData = [
+        /*let firesData = [
             ["lat": 41.412156, "lon": -81.862931],
             ["lat": 41.412157, "lon": -81.862932],
             ["lat": 41.512156, "lon": -81.862931]
-        ]
+        ]*/
         
-        for report in firesData {
-            
-            fireLat = report["lat"]!
-            fireLon = report["lon"]!
-            
-            print(fireLat, fireLon)
-            
-            
-            let annotation = MKPointAnnotation()
-            annotation.coordinate.latitude = fireLat
-            annotation.coordinate.longitude = fireLon
-            
-            print(annotation.coordinate.latitude, annotation.coordinate.longitude)
-            
-            
-            
-            myMap.addAnnotation(annotation)
-            fireLoc.append(annotation)
-            myMap.showAnnotations(fireLoc, animated: true)
-            
-        }
+        let myUrl = NSURL(string:"https://starflock.herokuapp.com/fires")!
+        URLSession.shared.dataTask(with: myUrl as URL) { (data, response, error) in
+            if error != nil {
+                print(error!)
+            } else {
+                do {
+                    print(String(bytes: data.unsafelyUnwrapped, encoding: String.Encoding.utf8))
+                    let json = try JSONSerialization.jsonObject(with: data.unsafelyUnwrapped, options: []) as? [[String:Any]]
+                    print(json)
+                    if json != nil {
+                        for report in json.unsafelyUnwrapped ?? [] {
+                            print("------------------")
+                            print(report)
+                            let fireLat = Double(report["lat"]! as! String) ?? 0
+                            let fireLon = Double(report["lon"]! as! String) ?? 0
+                            
+                            DispatchQueue.main.async {
+                                let annotation = MKPointAnnotation()
+                                annotation.coordinate.latitude = fireLat
+                                annotation.coordinate.longitude = fireLon
+                                
+                                print("ADDING")
+                                print(annotation.coordinate.latitude, annotation.coordinate.longitude)
+                                
+                                
+                                
+                                self.myMap.addAnnotation(annotation)
+                                var fireLoc = [MKPointAnnotation]()
 
-        
-        
+                                fireLoc.append(annotation)
+                                self.myMap.showAnnotations(fireLoc, animated: true)
+                            }
+                            
+                        }
+                    } else {
+                        print(json)
+                        print("JSON is not an array of dictionaries")
+                    }
+                } catch let error as NSError {
+                    print(error)
+                }
+            }
+            }.resume()
     }
     
 }

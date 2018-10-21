@@ -15,7 +15,6 @@ class ViewController_signin: UIViewController {
     
     @IBOutlet var successLabel: UILabel!
     @IBOutlet var errorLabel: UILabel!
-    
     @IBOutlet weak var segControl: UISegmentedControl!
     
     

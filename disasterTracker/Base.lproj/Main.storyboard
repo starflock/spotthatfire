@@ -140,11 +140,18 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="reset password"/>
                             </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Error" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jyQ-nC-IWX">
+                                <rect key="frame" x="150" y="106" width="74" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.75295498699999996" green="0.17858465664704132" blue="0.18516120796910993" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="errorLabel" destination="lKm-q1-IHg" id="OAY-mu-ita"/>
+                        <outlet property="errorLabel" destination="jyQ-nC-IWX" id="0fv-HL-Jmt"/>
                         <outlet property="inputEmail" destination="WOs-bZ-MYg" id="Nmo-is-Erp"/>
                         <outlet property="inputPassword" destination="f3y-ni-DKy" id="a2P-Ea-dc5"/>
                         <outlet property="segControl" destination="1h3-8l-Fi2" id="8Fj-z8-7k7"/>
