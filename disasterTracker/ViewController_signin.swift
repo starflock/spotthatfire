@@ -25,19 +25,16 @@ class ViewController_signin: UIViewController {
     
         print("----------- HERE 0 -------------")
         
-        let json: [String: Any] = [
-            "user" :
-                [
-                    "email" : inputEmail.text!,
-                    "password" : inputPassword.text!,
-                ]
-        ]
+            let json: [String: Any] = [
+                "email" : inputEmail.text!,
+                "password" : inputPassword.text!
+            ]
     
     
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
     
-            let url = NSURL(string: "https://starflock.herokuapp.com/register")!
+            let url = NSURL(string: "https://starflock.herokuapp.com/login")!
             let request = NSMutableURLRequest(url: url as URL)
             request.httpMethod = "POST"
     
@@ -48,6 +45,7 @@ class ViewController_signin: UIViewController {
     
                 if let httpResponse = response as? HTTPURLResponse {
                     let statusCode = httpResponse.statusCode
+                    print(statusCode)
                     //let statusCode = 200
                     if (statusCode == 200 || statusCode == 201) {
                         //self.hiddenBool = false
