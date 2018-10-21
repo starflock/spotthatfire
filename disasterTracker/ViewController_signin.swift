@@ -134,6 +134,7 @@ class ViewController_signin: UIViewController {
         super.viewDidLoad()
         
         successLabel.isHidden = true
+        errorLabel.isHidden = true
 
         // Do any additional setup after loading the view.
     }

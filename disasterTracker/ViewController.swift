@@ -54,8 +54,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func reportFireBtn(_ sender: UIButton) {
-        
-            let json: [String: Any] = [
+            let idToken = UserDefaults.standard.string(forKey: "idToken")
+            var json: [String: Any] = [
                 "location" :
                 [
                         "latitude" : lat,
@@ -65,7 +65,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 "device_id": device_id,
                 "time": String(describing: time)
             ]
-            
+        
+        if idToken != nil {
+            json["idToken"] = idToken.unsafelyUnwrapped
+        }
             
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
