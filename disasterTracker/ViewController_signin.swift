@@ -14,6 +14,7 @@ class ViewController_signin: UIViewController {
     @IBOutlet weak var inputPassword: UITextField!
     
     @IBOutlet var successLabel: UILabel!
+    @IBOutlet var errorLabel: UILabel!
     
     @IBOutlet weak var segControl: UISegmentedControl!
     
@@ -26,18 +27,15 @@ class ViewController_signin: UIViewController {
         print("----------- HERE 0 -------------")
         
         let json: [String: Any] = [
-            "user" :
-                [
-                    "email" : inputEmail.text!,
-                    "password" : inputPassword.text!,
-                ]
-        ]
+                "email" : inputEmail.text!,
+                "password" : inputPassword.text!
+            ]
     
     
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
     
-            let url = NSURL(string: "https://starflock.herokuapp.com/register")!
+            let url = NSURL(string: "https://starflock.herokuapp.com/login")!
             let request = NSMutableURLRequest(url: url as URL)
             request.httpMethod = "POST"
     
@@ -52,13 +50,23 @@ class ViewController_signin: UIViewController {
                     if (statusCode == 200 || statusCode == 201) {
                         //self.hiddenBool = false
                         //print(self.hiddenBool)
-                        
+                        // let json = try? JSONSerialization.jsonObject(with: data.unsafelyUnwrapped, options: [])
+
+                        UserDefaults.standard.set(String(data: data.unsafelyUnwrapped, encoding: String.Encoding.utf8), forKey: "idToken")
+                        print(UserDefaults.standard.string(forKey: "idToken") as Any)
                         DispatchQueue.main.async {
                             self.successLabel.isHidden = false
+                            self.errorLabel.isHidden = true
                         }
                         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
                             self.performSegue(withIdentifier: "segue_signedin", sender: self)
                         })
+                    } else {
+                        DispatchQueue.main.async {
+                            self.errorLabel.isHidden = false
+                            self.successLabel.isHidden = true
+
+                        }
                     }
                 }
             }
