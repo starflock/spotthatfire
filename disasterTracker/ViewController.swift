@@ -14,7 +14,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     private var alt = Double()
     private var time = Date()
     var hiddenBool = Bool()
-    var zoomValue = 80
+    var zoomValue = 150
     
     @IBAction func zoomBtn(_ sender: UIStepper) {
         
