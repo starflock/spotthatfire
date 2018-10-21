@@ -13,7 +13,6 @@ import CoreLocation
 class ViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var myMap: MKMapView!
-    //@IBOutlet weak var successfullyReportedLabel: UILabel!
     @IBOutlet var successfullyReportedLabel: UILabel!
     
     private var lat = Double()
@@ -33,7 +32,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         let location = locations[0]
-        let span:MKCoordinateSpan = MKCoordinateSpanMake(0.01, 0.01)
+        let span:MKCoordinateSpan = MKCoordinateSpanMake(0.03, 0.03)
         let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
         let region:MKCoordinateRegion = MKCoordinateRegionMake(myLocation, span)
         myMap.setRegion(region, animated: true)
@@ -55,16 +54,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func reportFireBtn(_ sender: UIButton) {
-
-        print("BUTTON HAS BEEN CLICKED !")
-        
-        //successfullyReportedLabel.isHidden = false
         
             let json: [String: Any] = [
                 "location" :
                 [
                         "latitude" : lat,
-                        "longitude" : lon
+                        "longitude" : lon,
+                        "altitude" : alt
                 ],
                 "device_id": device_id,
                 "time": String(describing: time)
@@ -85,36 +81,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 let task = URLSession.shared.dataTask(with: request as URLRequest){ data, response, error in
                     
                     if let httpResponse = response as? HTTPURLResponse {
-                        //self.statusCode2 = httpResponse.statusCode
                         let statusCode = httpResponse.statusCode
-                        print(statusCode)
                         if (statusCode == 200 || statusCode == 201) {
                             self.hiddenBool = false
                             print(self.hiddenBool)
-                            
                             DispatchQueue.main.async {
                                 self.successfullyReportedLabel.isHidden = false
                             }
-                            
-                            //self.successfullyReportedLabel.isHidden = false
-                            //self.successfullyReportedLabel.setNeedsDisplay()
                         }
                     }
                     
-                    //print(hiddenBool)
-                    //successfullyReportedLabel.isHidden = hiddenBool
-                    
-//                    if error != nil{
-//                        print("Error1 -> \(String(describing: error))")
-//                        return
-//                    }
-//                    do {
-//                        let result = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String:AnyObject]
-//                        print("Result -> \(String(describing: result))")
-//                        
-//                    } catch {
-//                        print("Error2 -> \(error)")
-//                    }
                 }
                 
                 task.resume()
@@ -124,9 +100,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
 
         successfullyReportedLabel.isHidden = hiddenBool
+        
+        
+        
+        
+        
     }
-    
-    //let statusCode2 = reportFireBtn(<#T##ViewController#>)
     
     override func viewDidLoad() {
         
@@ -140,11 +119,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         manager.requestWhenInUseAuthorization()
         manager.startUpdatingLocation()
         
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
 
