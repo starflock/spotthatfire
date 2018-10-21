@@ -14,7 +14,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     private var alt = Double()
     private var time = Date()
     var hiddenBool = Bool()
-    var zoomValue = 80
+    var zoomValue = 150
     
     @IBAction func zoomBtn(_ sender: UIStepper) {
         
@@ -154,8 +154,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         let firesData = [
             ["lat": 41.412156, "lon": -81.862931],
-            ["lat": 41.412157, "lon": -81.862932],
-            ["lat": 41.512156, "lon": -81.862931]
+            ["lat": 41.412156, "lon": -81.862931],
+            ["lat": 37.165634, "lon": -119.519027],
+            ["lat": 37.158097, "lon": -119.517036],
+            ["lat": 37.154539, "lon": -119.509657],
+            ["lat": 37.146742, "lon": -119.509487],
+            ["lat": 37.148928, "lon": -119.500047],
+            ["lat": 35.851226, "lon": -111.946537],
+            ["lat": 35.863313, "lon": -111.908082],
+            ["lat": 35.824433, "lon": -111.864133],
+            ["lat": 35.841217, "lon": -111.906708],
+            ["lat": 35.805667, "lon": -111.964391],
+            ["lat": 35.880336, "lon": -111.883361],
+            ["lat": 35.880418, "lon": -111.868253]
         ]
         
         for report in firesData {

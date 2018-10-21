@@ -56,7 +56,7 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <stepper opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="80" maximumValue="100" stepValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="OVm-ey-Hfv">
+                            <stepper opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="150" maximumValue="200" stepValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="OVm-ey-Hfv">
                                 <rect key="frame" x="16" y="28" width="94" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.99048824339999997" green="0.99020559529999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
